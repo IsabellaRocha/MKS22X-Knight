@@ -12,7 +12,8 @@ public class KnightBoard {
         board[idx][x] = 0;
       }
     }
-    int[][] Poss = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
+    int[][] Poss2 = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
+    Poss = Poss2;
   }
 //  private boolean addKnight(int ogx, int ogy, int movex, int movey, int moveNumber) {
 //    if (ogx + movex >= 0 && ogx + movex < board.length && ogy + movey >= 0 && ogy + movey < board[ogx + movex].length) {
@@ -33,13 +34,28 @@ public class KnightBoard {
 //    return false;
 //  }
   public boolean solve(int startingRow, int startingCol) {
+    if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length) {
+      throw new IllegalArgumentException();
+    }
     return solveH(0, 0, 1);
   }
   private boolean solveH(int row, int col, int moveNumber) {
-    if (moveNumber == (board.length * board[0].length)) {
-      return true;
+    if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) {
+      return false;
+    }
+    if (moveNumber >= (board.length * board[0].length)) {
+      if (board[row][col] == 0) {
+        board[row][col] = moveNumber;
+        return true;
+      }
+      else {
+        return false;
+      }
     }
     else {
+      if (board[row][col] == 0) {
+        board[row][col] = moveNumber;
+      }
       boolean one = solveH(row + Poss[0][0], col + Poss[0][1], moveNumber++);
       boolean two = solveH(row + Poss[1][0], col + Poss[1][1], moveNumber++);
       boolean three = solveH(row + Poss[2][0], col + Poss[2][1], moveNumber++);
@@ -48,7 +64,7 @@ public class KnightBoard {
       boolean six = solveH(row + Poss[5][0], col + Poss[5][1], moveNumber++);
       boolean seven = solveH(row + Poss[6][0], col + Poss[6][1], moveNumber++);
       boolean eight = solveH(row + Poss[7][0], col + Poss[7][1], moveNumber++);
-      return one || two || three || four || five || six || seven || eight;
+      return (one || two || three || four || five || six || seven || eight);
     }
   }
   public String toString() {
@@ -67,7 +83,7 @@ public class KnightBoard {
     return output;
   }
   public static void main(String[] args) {
-    KnightBoard k = new KnightBoard(8, 8);
+    KnightBoard k = new KnightBoard(5, 4);
     System.out.println(k);
 //    k.addKnight(0, 0, 2, 1);
 //    System.out.println(k);
