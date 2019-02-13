@@ -52,21 +52,36 @@ public class KnightBoard {
         return false;
       }
     }
-    else {
-      if (board[row][col] == 0) {
-        board[row][col] = moveNumber;
+    if (board[row][col] == 0 && moveNumber < board.length * board[0].length) {
+      board[row][col] = moveNumber;
+      for (int idx = 0; idx <= 7; idx++) {
+        if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
+          solveH(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1);
+        }
       }
-      boolean one = solveH(row + Poss[0][0], col + Poss[0][1], moveNumber++);
-      boolean two = solveH(row + Poss[1][0], col + Poss[1][1], moveNumber++);
-      boolean three = solveH(row + Poss[2][0], col + Poss[2][1], moveNumber++);
-      boolean four = solveH(row + Poss[3][0], col + Poss[3][1], moveNumber++);
-      boolean five = solveH(row + Poss[4][0], col + Poss[4][1], moveNumber++);
-      boolean six = solveH(row + Poss[5][0], col + Poss[5][1], moveNumber++);
-      boolean seven = solveH(row + Poss[6][0], col + Poss[6][1], moveNumber++);
-      boolean eight = solveH(row + Poss[7][0], col + Poss[7][1], moveNumber++);
-      return (one || two || three || four || five || six || seven || eight);
     }
+    return false;
   }
+
+  //  else {
+  //    for (int idx = 0; idx <= 7; idx++) {
+  //      if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
+  //        if (solveH(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1)) {
+  //          return true;
+  //        }
+    //      else {
+    //        board[row][col] = 0;
+      //      moveNumber--;
+    //      }
+  //    boolean one = solveH(row + Poss[0][0], col + Poss[0][1], moveNumber++);
+  //    boolean two = solveH(row + Poss[1][0], col + Poss[1][1], moveNumber++);
+  //    boolean three = solveH(row + Poss[2][0], col + Poss[2][1], moveNumber++);
+  //    boolean four = solveH(row + Poss[3][0], col + Poss[3][1], moveNumber++);
+  //    boolean five = solveH(row + Poss[4][0], col + Poss[4][1], moveNumber++);
+  //    boolean six = solveH(row + Poss[5][0], col + Poss[5][1], moveNumber++);
+  //    boolean seven = solveH(row + Poss[6][0], col + Poss[6][1], moveNumber++);
+  //    boolean eight = solveH(row + Poss[7][0], col + Poss[7][1], moveNumber++);
+  //    return (one || two || three || four || five || six || seven || eight);
   public String toString() {
     String output = "";
     for (int idx = 0; idx < board.length; idx++) {
