@@ -46,6 +46,32 @@ public class KnightBoard {
     }
     return false;
   }
+  public boolean solve(int startingRow, int startingCol) {
+    return solveH(0, 0);
+  }
+  private boolean solveH(int row, int col) {
+    if (knight == board.length * board[0].length) {
+      return true;
+    }
+    else {
+      addKnight(0, 0, row, col);
+      for (int r = -2; r < 2; r++) {
+        for (int c = -2; c < 2; c++) {
+          if ((Math.abs(r) % 2 == 0 && Math.abs(c) % 2 != 0) || (Math.abs(r) % 2 != 0 && Math.abs(c) % 2 == 0)) {
+            if (addKnight(row, col, row + r, col + c)) {
+              if (solveH(row + r, col + c)) {
+                return true;
+              }
+              else {
+                removeKnight(row, col, row + r, col + c);
+              }
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
   public String toString() {
     String output = "";
     for (int idx = 0; idx < board.length; idx++) {
@@ -55,10 +81,22 @@ public class KnightBoard {
           output += "_ ";
         }
         else {
-          output += board[idx][x];
+          output += board[idx][x] + " ";
         }
       }
     }
     return output;
+  }
+  public static void main(String[] args) {
+    KnightBoard k = new KnightBoard(8, 8);
+    System.out.println(k);
+    k.addKnight(0, 0, 2, 1);
+    System.out.println(k);
+    k.addKnight(2, 1, 2, 1);
+    System.out.println(k);
+    k.removeKnight(2, 1, 2, 1);
+    System.out.println(k);
+    k.addKnight(2, 1, 1, 2);
+    System.out.println(k);
   }
 }
