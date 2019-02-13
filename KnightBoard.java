@@ -13,7 +13,7 @@ public class KnightBoard {
         board[idx][x] = 0;
       }
     }
-    knight = 0;
+    knight = 1;
 //    Poss = new ArrayList<Point>();
 //    Point one = new Point(-2, -1);
 //    Point two = new Point(-2, 1);
@@ -35,5 +35,30 @@ public class KnightBoard {
       }
     }
     return false;
+  }
+  private boolean removeKnight(int ogx, int ogy, int movex, int movey) {
+    if (ogx + movex >= 0 && ogx + movex < board.length && ogy + movey >= 0 && ogy + movey < board[ogx + movex].length) {
+      if (board[ogx + movex][ogy + movey] != 0) {
+        board[ogx + movex][ogy + movey] = 0;
+        knight -= 1;
+        return true;
+      }
+    }
+    return false;
+  }
+  public String toString() {
+    String output = "";
+    for (int idx = 0; idx < board.length; idx++) {
+      output += "\n";
+      for (int x = 0; x < board[idx].length; x++) {
+        if (board[idx][x] == 0) {
+          output += "_ ";
+        }
+        else {
+          output += board[idx][x];
+        }
+      }
+    }
+    return output;
   }
 }
