@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 public class KnightBoard {
   private int[][] board;
-  private int knight;
-//  public ArrayList<Point> Poss;
+  public int[][] Poss;
   public KnightBoard(int startingRows, int startingCols) {
     if (startingRows <= 0 || startingCols <= 0) {
       throw new IllegalArgumentException();
@@ -13,64 +12,44 @@ public class KnightBoard {
         board[idx][x] = 0;
       }
     }
-    knight = 1;
-//    Poss = new ArrayList<Point>();
-//    Point one = new Point(-2, -1);
-//    Point two = new Point(-2, 1);
-//    Point three = new Point(-1, -2);
-//    Point four = new Point(-1, 2);
-//    Point five = new Point(1, -2);
-//    Point six = new Point(1, 2);
-//    Point seven = new Point(2, -1);
-//    Point eight = new Point(2, 1);
-//    Poss.add(one); Poss.add(two); Poss.add(three); Poss.add(four);
-//    Poss.add(five); Poss.add(six); Poss.add(seven); Poss.add(eight);
+    int[][] Poss = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
   }
-  private boolean addKnight(int ogx, int ogy, int movex, int movey) {
-    if (ogx + movex >= 0 && ogx + movex < board.length && ogy + movey >= 0 && ogy + movey < board[ogx + movex].length) {
-      if (board[ogx + movex][ogy + movey] == 0) {
-        board[ogx + movex][ogy + movey] = knight;
-        knight += 1;
-        return true;
-      }
-    }
-    return false;
-  }
-  private boolean removeKnight(int ogx, int ogy, int movex, int movey) {
-    if (ogx + movex >= 0 && ogx + movex < board.length && ogy + movey >= 0 && ogy + movey < board[ogx + movex].length) {
-      if (board[ogx + movex][ogy + movey] != 0) {
-        board[ogx + movex][ogy + movey] = 0;
-        knight -= 1;
-        return true;
-      }
-    }
-    return false;
-  }
+//  private boolean addKnight(int ogx, int ogy, int movex, int movey, int moveNumber) {
+//    if (ogx + movex >= 0 && ogx + movex < board.length && ogy + movey >= 0 && ogy + movey < board[ogx + movex].length) {
+//      if (board[ogx + movex][ogy + movey] == 0) {
+//        board[ogx + movex][ogy + movey] = moveNumber;
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
+//  private boolean removeKnight(int ogx, int ogy, int movex, int movey) {
+//    if (ogx + movex >= 0 && ogx + movex < board.length && ogy + movey >= 0 && ogy + movey < board[ogx + movex].length) {
+//      if (board[ogx + movex][ogy + movey] != 0) {
+//        board[ogx + movex][ogy + movey] = 0;
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
   public boolean solve(int startingRow, int startingCol) {
-    return solveH(0, 0);
+    return solveH(0, 0, 1);
   }
-  private boolean solveH(int row, int col) {
-    if (knight == (board.length * board[0].length)) {
+  private boolean solveH(int row, int col, int moveNumber) {
+    if (moveNumber == (board.length * board[0].length)) {
       return true;
     }
     else {
-      addKnight(0, 0, row, col);
-      for (int r = -2; r < 3; r++) {
-        for (int c = -2; c < 3; c++) {
-          if ((Math.abs(r) % 2 == 0 && Math.abs(c) % 2 != 0) || (Math.abs(r) % 2 != 0 && Math.abs(c) % 2 == 0)) {
-            if (addKnight(row, col, row + r, col + c)) {
-              if (solveH(row + r, col + c)) {
-                return true;
-              }
-              else {
-                removeKnight(row, col, row + r, col + c);
-              }
-            }
-          }
-        }
-      }
+      boolean one = solveH(row + Poss[0][0], col + Poss[0][1], moveNumber++);
+      boolean two = solveH(row + Poss[1][0], col + Poss[1][1], moveNumber++);
+      boolean three = solveH(row + Poss[2][0], col + Poss[2][1], moveNumber++);
+      boolean four = solveH(row + Poss[3][0], col + Poss[3][1], moveNumber++);
+      boolean five = solveH(row + Poss[4][0], col + Poss[4][1], moveNumber++);
+      boolean six = solveH(row + Poss[5][0], col + Poss[5][1], moveNumber++);
+      boolean seven = solveH(row + Poss[6][0], col + Poss[6][1], moveNumber++);
+      boolean eight = solveH(row + Poss[7][0], col + Poss[7][1], moveNumber++);
+      return one || two || three || four || five || six || seven || eight;
     }
-    return false;
   }
   public String toString() {
     String output = "";
