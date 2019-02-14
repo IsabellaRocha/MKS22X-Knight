@@ -91,7 +91,12 @@ public class KnightBoard {
           output += "_ ";
         }
         else {
-          output += board[idx][x] + " ";
+          if (board[idx][x] >= 10) {
+            output += board[idx][x] + " ";
+          }
+          else {
+            output += " " + board[idx][x] + " ";
+          }
         }
       }
     }
