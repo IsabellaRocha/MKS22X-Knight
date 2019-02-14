@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 public class KnightBoard {
   private int[][] board;
   public int[][] Poss;
@@ -79,14 +78,9 @@ public class KnightBoard {
     boolean check = false;
     for (int idx = 0; idx <= 7; idx++) {
       if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
-        if(solveH(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1)) {
-          check = true;
-          count += solHelp(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1);
-        }
+        count += solHelp(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1);
+        board[row][col] = 0;
       }
-    }
-    if (check == false) {
-      board[row][col] = 0;
     }
     return count;
   }
@@ -113,10 +107,11 @@ public class KnightBoard {
   public static void main(String[] args) {
     KnightBoard k = new KnightBoard(5, 4);
     KnightBoard n = new KnightBoard(8, 8);
-    System.out.println(k);
-    k.solve(0, 0);
-    System.out.println(k);
+//    System.out.println(k);
+//    k.solve(0, 0);
+//    System.out.println(k);
     n.solve(0,0);
     System.out.println(n);
+    System.out.println(k.countSolutions(0, 0));
   }
 }
