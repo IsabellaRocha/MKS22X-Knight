@@ -11,7 +11,10 @@ public class KnightBoard {
         board[idx][x] = 0;
       }
     }
-    int[][] Poss2 = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
+    int[][] Poss2 = {{-2, -1}, {-2, 1},
+                     {-1, -2}, {-1, 2},
+                     {1, -2}, {1, 2},
+                     {2, -1}, {2, 1}};
     Poss = Poss2;
   }
   public boolean solve(int startingRow, int startingCol) {
@@ -71,16 +74,15 @@ public class KnightBoard {
     return solHelp(startingRow, startingCol, 1);
   }
   private int solHelp(int row, int col, int moveNumber) {
+    int count = 0;
     if (moveNumber == board.length * board[0].length) {
       return 1;
     }
-    int count = 0;
-    boolean check = false;
     for (int idx = 0; idx <= 7; idx++) {
       if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
         count += solHelp(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1);
-        board[row][col] = 0;
       }
+      board[row][col] = 0;
     }
     return count;
   }
@@ -105,13 +107,15 @@ public class KnightBoard {
     return output;
   }
   public static void main(String[] args) {
-    KnightBoard k = new KnightBoard(5, 4);
+    KnightBoard k = new KnightBoard(5, 5);
     KnightBoard n = new KnightBoard(8, 8);
 //    System.out.println(k);
 //    k.solve(0, 0);
 //    System.out.println(k);
     n.solve(0,0);
     System.out.println(n);
+//    k.solve(0,0);
+//    System.out.println(k);
     System.out.println(k.countSolutions(0, 0));
   }
 }
