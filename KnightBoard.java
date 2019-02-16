@@ -110,11 +110,11 @@ public class KnightBoard {
     KnightBoard n = new KnightBoard(8, 8);
     KnightBoard a = new KnightBoard(4, 4);
     KnightBoard b = new KnightBoard(2, 2);
-//    k.solve(0, 1);
+//    k.solve(2, 4);
 //    System.out.println(k);
 //    n.solve(1,1);
 //    System.out.println(n);
-    System.out.println(k.countSolutions(0, 0));
+    System.out.println(k.countSolutions(2, 2));
     System.out.println(a.countSolutions(0, 0));
     System.out.println(b.countSolutions(0, 0));
   }
