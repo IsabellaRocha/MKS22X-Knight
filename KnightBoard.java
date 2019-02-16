@@ -43,20 +43,16 @@ public class KnightBoard {
         return false;
       }
     }
-    boolean check = false;
     if (board[row][col] == 0 && moveNumber < board.length * board[0].length) {
       board[row][col] = moveNumber;
       for (int idx = 0; idx <= 7; idx++) {
         if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
           if(solveH(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1)) {
-            check = true;
             return true;
           }
         }
       }
-      if (check == false) {
-        board[row][col] = 0;
-      }
+      board[row][col] = 0;
     }
     return false;
   }
@@ -78,9 +74,12 @@ public class KnightBoard {
     if (moveNumber == board.length * board[0].length) {
       return 1;
     }
-    for (int idx = 0; idx <= 7; idx++) {
-      if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
-        count += solHelp(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1);
+    if (board[row][col] == 0) {
+      board[row][col] = moveNumber;
+      for (int idx = 0; idx <= 7; idx++) {
+        if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
+          count += solHelp(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1);
+        }
       }
       board[row][col] = 0;
     }
