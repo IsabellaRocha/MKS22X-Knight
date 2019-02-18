@@ -1,15 +1,26 @@
 import java.util.ArrayList;
 public class Possibility {
-  private ArrayList<Integer> opt;
-  public Possibility(int row, int col) {
-    opt = new ArrayList<>();
-    opt.add(row);
-    opt.add(col);
+  private int row;
+  private int col;
+  private int moves;
+  public Possibility(int row, int col, int moves) {
+    this.row = row;
+    this.col = col;
+    this.moves = moves;
   }
   public int getRow() {
-    return opt.get(0);
+    return row;
   }
   public int getCol() {
-    return opt.get(1);
+    return col;
+  }
+  public int getMoves() {
+    return moves;
+  }
+  public void changeMoves(int moves) {
+    this.moves = moves;
+  }
+  public void moved() {
+    moves--;
   }
 }

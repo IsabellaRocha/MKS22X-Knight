@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 public class KnightBoard {
   private int[][] board;
   public int[][] Poss;
+  public Possibility[][] Optimal;
   public KnightBoard(int startingRows, int startingCols) {
     if (startingRows <= 0 || startingCols <= 0) {
       throw new IllegalArgumentException();
@@ -16,6 +18,16 @@ public class KnightBoard {
                      {1, -2}, {1, 2},
                      {2, -1}, {2, 1}};
     Poss = Poss2;
+  }
+  public void fillMoves() {
+    for (int idx = 0; idx < Optimal.length; idx++) {
+      for (int x = 0; x < Optimal[0].length; x++) {
+        Optimal[idx][x] = new Possibility(idx, x, 8);
+        if ((idx == 0 && x == 0) || (idx == 0 && x == Optimal[0].length - 1) || (idx == Optimal.length - 1 && x == 0) || (idx == Optimal.length - 1 && x == Optimal[0].length - 1)) {
+          Optimal[idx][x] = new Possibility(idx, x, 2);
+        }
+      }
+    }
   }
   public boolean solve(int startingRow, int startingCol) {
     if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length) {
