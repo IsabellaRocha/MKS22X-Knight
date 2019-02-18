@@ -18,6 +18,8 @@ public class KnightBoard {
                      {1, -2}, {1, 2},
                      {2, -1}, {2, 1}};
     Poss = Poss2;
+    Optimal = new Possibility[startingRows][startingCols];
+    fillMoves();
   }
   public void fillMoves() {
     for (int idx = 0; idx < Optimal.length; idx++) {
