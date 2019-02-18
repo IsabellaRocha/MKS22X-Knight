@@ -23,9 +23,21 @@ public class KnightBoard {
     for (int idx = 0; idx < Optimal.length; idx++) {
       for (int x = 0; x < Optimal[0].length; x++) {
         Optimal[idx][x] = new Possibility(idx, x, 8);
+        if (idx == 0 || x == 0 || idx == Optimal.length - 1 || x == Optimal[0].length - 1) {
+          Optimal[idx][x] = new Possibility(idx, x, 4);
+        }
+        if (idx == 1 || x == 1 || idx == Optimal.length - 2 || x == Optimal[0].length - 2) {
+          Optimal[idx][x] = new Possibility(idx, x, 6);
+        }
         if ((idx == 0 && x == 0) || (idx == 0 && x == Optimal[0].length - 1) || (idx == Optimal.length - 1 && x == 0) || (idx == Optimal.length - 1 && x == Optimal[0].length - 1)) {
           Optimal[idx][x] = new Possibility(idx, x, 2);
         }
+        if ((idx == 0 && x == 1) || (idx == 0 && x == Optimal[0].length - 1) || (idx == 1 && x == 0) || (idx == 1 && x == Optimal[0].length - 1)
+        || (idx == Optimal.length - 2 && x == 0)|| (idx == Optimal.length - 2 && x == Optimal[0].length - 1) || (idx == Optimal.length - 1 && x == 1) || (idx == Optimal.length - 1 && x == Optimal[0].length - 2)) {
+          Optimal[idx][x] = new Possibility(idx, x, 3);
+        }
+        Optimal[1][1].change(4); Optimal[1][Optimal[0].length - 2].change(4);
+        Optimal[Optimal.length - 2][1].change(4); Optimal[Optimal.length - 2][Optimal[0].length - 2].change(4);
       }
     }
   }

@@ -17,7 +17,7 @@ public class Possibility {
   public int getMoves() {
     return moves;
   }
-  public void changeMoves(int moves) {
+  public void change(int moves) {
     this.moves = moves;
   }
   public void moved() {
