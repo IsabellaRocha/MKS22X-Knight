@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 public class KnightBoard {
   private int[][] board;
   public int[][] Poss;
@@ -103,13 +104,13 @@ public class KnightBoard {
       return true;
     }
     ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
-    for (int idx = 0; idx < 8; idx++) {
+    for (int idx = 0; idx <= 7; idx++) {
       if (moveKnight(row, col, idx, moveNumber + 1)) {
         Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
         Optimal[row + Poss[idx][0]][col + Poss[idx][1]].remove();
       }
     }
-    Arrays.sort(Possibilities);
+    Sort(Possibilities);
     for (int idx = 0; idx < Possibilities.size(); idx++) {
       Possibilities.get(idx).move(moveNumber + 1);
       if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
@@ -119,62 +120,73 @@ public class KnightBoard {
     Optimal[row][col].remove();
     return false;
   }
+  public static void Sort(ArrayList<Possibility> ary) {
+    for (int idx = 1; idx < ary.size(); idx++) {
+      int current = ary.get(idx).getMoves();
+      int curIdx = idx - 1;
+      while (curIdx >= 0 && ary.get(curIdx).getMoves() > current) {
+        ary.set(curIdx + 1, ary.get(curIdx));
+        curIdx--;
+      }
+      ary.set(curIdx + 1, ary.get(idx));
+    }
+  }
   public boolean moveKnight(int row, int col, int x, int moveNumber) {
     try {
       if (x == 0) {
-        if (!Optimal[row + 2][col + 1].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row + 2][col + 1].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 1) {
-        if (!Optimal[row + 2][col - 1].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row + 2][col - 1].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 2) {
-        if (!Optimal[row - 2][col + 1].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row - 2][col + 1].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 3) {
-        if (!Optimal[row - 2][col - 1].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row - 2][col - 1].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 4) {
-        if (!Optimal[row + 1][col + 2].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row + 1][col + 2].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 5) {
-        if (!Optimal[row - 1][col + 2].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row - 1][col + 2].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 6) {
-        if (!Optimal[row + 1][col - 2].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row + 1][col - 2].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
       if (x == 7) {
-        if (!Optimal[row - 1][col - 2].open()) {
+        if (!Optimal[row + Poss[x][0]][col + Poss[x][1]].open()) {
           return false;
         }
-        Optimal[row - 1][col - 2].move(moveNumber);
+        Optimal[row + Poss[x][0]][col + Poss[x][1]].move(moveNumber);
         return true;
       }
     }
