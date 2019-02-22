@@ -102,61 +102,76 @@ public class KnightBoard {
     if (moveNumber == Optimal.length * Optimal[0].length) {
       return true;
     }
-
+    ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
+    for (int idx = 0; idx < 8; idx++) {
+      if (moveKnight(row, col, idx, moveNumber + 1)) {
+        Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
+        Optimal[row + Poss[idx][0]][col + Poss[idx][1]].remove();
+      }
+    }
+    Arrays.sort(Possibilities);
+    for (int idx = 0; idx < Possibilities.size(); idx++) {
+      Possibilities.get(idx).move(moveNumber + 1);
+      if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
+        return true;
+      }
+    }
+    Optimal[row][col].remove();
+    return false;
   }
   public boolean moveKnight(int row, int col, int x, int moveNumber) {
     try {
-      if(x == 0) {
-        if(!Optimal[row + 2][col + 1].open()) {
+      if (x == 0) {
+        if (!Optimal[row + 2][col + 1].open()) {
           return false;
         }
         Optimal[row + 2][col + 1].move(moveNumber);
         return true;
       }
-      if(x == 1) {
-        if(!Optimal[row + 2][col - 1].open()) {
+      if (x == 1) {
+        if (!Optimal[row + 2][col - 1].open()) {
           return false;
         }
         Optimal[row + 2][col - 1].move(moveNumber);
         return true;
       }
-      if(x == 2) {
-        if(!Optimal[row - 2][col + 1].open()) {
+      if (x == 2) {
+        if (!Optimal[row - 2][col + 1].open()) {
           return false;
         }
         Optimal[row - 2][col + 1].move(moveNumber);
         return true;
       }
-      if(x == 3) {
-        if(!Optimal[row - 2][col - 1].open()) {
+      if (x == 3) {
+        if (!Optimal[row - 2][col - 1].open()) {
           return false;
         }
         Optimal[row - 2][col - 1].move(moveNumber);
         return true;
       }
-      if(x == 4) {
-        if(!Optimal[row + 1][col + 2].open()) {
+      if (x == 4) {
+        if (!Optimal[row + 1][col + 2].open()) {
           return false;
         }
         Optimal[row + 1][col + 2].move(moveNumber);
         return true;
       }
-      if(x == 5) {
-        if(!Optimal[row - 1][col + 2].open()) {
+      if (x == 5) {
+        if (!Optimal[row - 1][col + 2].open()) {
           return false;
         }
         Optimal[row - 1][col + 2].move(moveNumber);
         return true;
       }
-      if(x == 6) {
-        if(!Optimal[row + 1][col - 2].open()) {
+      if (x == 6) {
+        if (!Optimal[row + 1][col - 2].open()) {
           return false;
         }
         Optimal[row + 1][col - 2].move(moveNumber);
         return true;
       }
-      if(x == 7) {
-        if(!Optimal[row - 1][col - 2].open()) {
+      if (x == 7) {
+        if (!Optimal[row - 1][col - 2].open()) {
           return false;
         }
         Optimal[row - 1][col - 2].move(moveNumber);
