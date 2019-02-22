@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 public class KnightBoard {
   private int[][] board;
   public int[][] Poss;
@@ -80,6 +80,90 @@ public class KnightBoard {
       }
       board[row][col] = 0;
     }
+    return false;
+  }
+  public boolean solveOpt(int startingRow, int startingCol) {
+    if (startingRow < 0 || startingCol < 0 || startingRow >= Optimal.length || startingCol >= Optimal[0].length) {
+      throw new IllegalArgumentException();
+    }
+    for (int idx = 0; idx < Optimal.length; idx++) {
+      for (int x = 0; x < Optimal[idx].length; x++) {
+        if (Optimal[idx][x].getValue() != 0) {
+          throw new IllegalStateException();
+        }
+      }
+    }
+    return solveOptH(startingRow, startingCol, 1);
+  }
+  public boolean solveOptH(int row, int col, int moveNumber) {
+    if (row < 0 || col < 0 || row >= Optimal.length || col >= Optimal[0].length) {
+      return false;
+    }
+    if (moveNumber == Optimal.length * Optimal[0].length) {
+      return true;
+    }
+
+  }
+  public boolean moveKnight(int row, int col, int x, int moveNumber) {
+    try {
+      if(x == 0) {
+        if(!Optimal[row + 2][col + 1].open()) {
+          return false;
+        }
+        Optimal[row + 2][col + 1].move(moveNumber);
+        return true;
+      }
+      if(x == 1) {
+        if(!Optimal[row + 2][col - 1].open()) {
+          return false;
+        }
+        Optimal[row + 2][col - 1].move(moveNumber);
+        return true;
+      }
+      if(x == 2) {
+        if(!Optimal[row - 2][col + 1].open()) {
+          return false;
+        }
+        Optimal[row - 2][col + 1].move(moveNumber);
+        return true;
+      }
+      if(x == 3) {
+        if(!Optimal[row - 2][col - 1].open()) {
+          return false;
+        }
+        Optimal[row - 2][col - 1].move(moveNumber);
+        return true;
+      }
+      if(x == 4) {
+        if(!Optimal[row + 1][col + 2].open()) {
+          return false;
+        }
+        Optimal[row + 1][col + 2].move(moveNumber);
+        return true;
+      }
+      if(x == 5) {
+        if(!Optimal[row - 1][col + 2].open()) {
+          return false;
+        }
+        Optimal[row - 1][col + 2].move(moveNumber);
+        return true;
+      }
+      if(x == 6) {
+        if(!Optimal[row + 1][col - 2].open()) {
+          return false;
+        }
+        Optimal[row + 1][col - 2].move(moveNumber);
+        return true;
+      }
+      if(x == 7) {
+        if(!Optimal[row - 1][col - 2].open()) {
+          return false;
+        }
+        Optimal[row - 1][col - 2].move(moveNumber);
+        return true;
+      }
+    }
+    catch(IndexOutOfBoundsException e) {}
     return false;
   }
   public int countSolutions(int startingRow, int startingCol) {
