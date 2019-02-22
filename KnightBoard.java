@@ -109,27 +109,31 @@ public class KnightBoard {
     if (row < 0 || col < 0 || row >= Optimal.length || col >= Optimal[0].length) {
       return false;
     }
-    if (moveNumber == Optimal.length * Optimal[0].length) {
-      return true;
-    }
-    ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
-    for (int idx = 0; idx <= 7; idx++) {
-      if (moveKnight(row, col, idx, moveNumber + 1)) {
-        Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
-      }
-    }
-    Sort(Possibilities);
-    Optimal[row][col].move(moveNumber);
-    for (int idx = 0; idx < Possibilities.size(); idx++) {
-      Possibilities.get(idx).move(moveNumber + 1);
-      if(!solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
-        Possibilities.get(idx).remove();
-      }
-      else {
+    if (moveNumber >= (Optimal.length * Optimal[0].length)) {
+      if (Optimal[row][col].getValue() == 0) {
+        Optimal[row][col].move(moveNumber);
         return true;
       }
+      else {
+        return false;
+      }
     }
-    board[row][col] = 0;
+    if (Optimal[row][col].getValue() == 0 && moveNumber < Optimal.length * Optimal[0].length) {
+      Optimal[row][col].move(moveNumber);
+      ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
+      for (int idx = 0; idx <= 7; idx++) {
+        if (canMoveKnight(row, col, idx)) {
+          Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
+        }
+      }
+      Sort(Possibilities);
+      for (int idx = 0; idx < Possibilities.size(); idx++) {
+        if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
+          return true;
+        }
+      }
+      Optimal[row][col].remove();
+    }
     return false;
   }
   public static void Sort(ArrayList<Possibility> ary) {
@@ -143,13 +147,12 @@ public class KnightBoard {
       ary.set(curIdx + 1, ary.get(idx));
     }
   }
-  public boolean moveKnight(int row, int col, int x, int moveNumber) {
+  public boolean canMoveKnight(int row, int col, int x) {
     try {
-      return !Optimal[row + Poss[x][0]][col + Poss[x][1]].open();
+      return Optimal[row + Poss[x][0]][col + Poss[x][1]].open();
     }
-    catch(IndexOutOfBoundsException e) {
-      return false;
-    }
+    catch(IndexOutOfBoundsException e) {}
+    return false;
   }
   public int countSolutions(int startingRow, int startingCol) {
     if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length) {
@@ -205,7 +208,7 @@ public class KnightBoard {
     KnightBoard n = new KnightBoard(8, 8);
     KnightBoard a = new KnightBoard(4, 4);
     KnightBoard b = new KnightBoard(2, 2);
-    KnightBoard c = new KnightBoard(11, 11);
+    KnightBoard c = new KnightBoard(9, 9);
 //    k.solve(2, 4);
 //    System.out.println(k);
 //    n.solve(1,1);
