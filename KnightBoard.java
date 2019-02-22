@@ -39,10 +39,10 @@ public class KnightBoard {
         || (idx == Optimal.length - 2 && x == 0)|| (idx == Optimal.length - 2 && x == Optimal[0].length - 1) || (idx == Optimal.length - 1 && x == 1) || (idx == Optimal.length - 1 && x == Optimal[0].length - 2)) {
           Optimal[idx][x] = new Possibility(idx, x, 3);
         }
-        Optimal[1][1].change(4); Optimal[1][Optimal[0].length - 2].change(4);
-        Optimal[Optimal.length - 2][1].change(4); Optimal[Optimal.length - 2][Optimal[0].length - 2].change(4);
       }
     }
+    Optimal[1][1].change(4); Optimal[1][Optimal[0].length - 2].change(4);
+    Optimal[Optimal.length - 2][1].change(4); Optimal[Optimal.length - 2][Optimal[0].length - 2].change(4);
   }
   public boolean solve(int startingRow, int startingCol) {
     if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length) {
@@ -247,6 +247,7 @@ public class KnightBoard {
     KnightBoard n = new KnightBoard(8, 8);
     KnightBoard a = new KnightBoard(4, 4);
     KnightBoard b = new KnightBoard(2, 2);
+    KnightBoard c = new KnightBoard(11, 11);
 //    k.solve(2, 4);
 //    System.out.println(k);
 //    n.solve(1,1);
@@ -254,5 +255,6 @@ public class KnightBoard {
     System.out.println(k.countSolutions(2, 2));
     System.out.println(a.countSolutions(0, 0));
     System.out.println(b.countSolutions(0, 0));
+    System.out.println(c.solveOpt(0, 0));
   }
 }
