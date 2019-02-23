@@ -124,6 +124,7 @@ public class KnightBoard {
       for (int idx = 0; idx <= 7; idx++) {
         if (canMoveKnight(row, col, idx)) {
           Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
+          Optimal[row + Poss[idx][0]][col + Poss[idx][1]].update();
         }
       }
       Sort(Possibilities);
