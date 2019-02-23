@@ -30,9 +30,6 @@ public class Possibility {
   public void change(int moves) {
     this.moves = moves;
   }
-  public void update() {
-    moves--;
-  }
   public void move(int value) {
     this.value = value;
     open = false;
@@ -40,5 +37,8 @@ public class Possibility {
   public void remove() {
     value = 0;
     open = true;
+  }
+  public String toString() {
+    return "" + moves;
   }
 }

@@ -109,14 +109,6 @@ public class KnightBoard {
     if (row < 0 || col < 0 || row >= Optimal.length || col >= Optimal[0].length) {
       return false;
     }
-    ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
-    for (int idx = 0; idx <= 7; idx++) {
-      if (canMoveKnight(row, col, idx)) {
-        Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
-        Optimal[row + Poss[idx][0]][col + Poss[idx][1]].update();
-      }
-    }
-    Sort(Possibilities);
     if (moveNumber >= (Optimal.length * Optimal[0].length)) {
       if (Optimal[row][col].getValue() == 0) {
         Optimal[row][col].move(moveNumber);
@@ -126,9 +118,15 @@ public class KnightBoard {
         return false;
       }
     }
+    ArrayList<Possibility> Possibilities = create(row, col);
     if (Optimal[row][col].getValue() == 0 && moveNumber < Optimal.length * Optimal[0].length) {
+      Optimal[row][col].move(moveNumber);
       for (int idx = 0; idx < Possibilities.size(); idx++) {
-        Possibilities.get(idx).move(moveNumber + 1);
+        System.out.println(Text.CLEAR_SCREEN);
+        System.out.println(Text.go(1,1));
+        System.out.println(this);
+        System.out.println(Possibilities);
+        Text.wait(1500);
         if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
           return true;
         }
@@ -137,7 +135,14 @@ public class KnightBoard {
     }
     return false;
   }
-  public static void Sort(ArrayList<Possibility> ary) {
+  public boolean canMoveKnight(int row, int col, int idx) {
+    try {
+      return Optimal[row + Poss[idx][0]][col + Poss[idx][1]].isOpen();
+    }
+    catch(IndexOutOfBoundsException e) {}
+    return false;
+  }
+  public void Sort(ArrayList<Possibility> ary) {
     for (int idx = 1; idx < ary.size(); idx++) {
       int current = ary.get(idx).getMoves();
       int curIdx = idx - 1;
@@ -148,12 +153,15 @@ public class KnightBoard {
       ary.set(curIdx + 1, ary.get(idx));
     }
   }
-  public boolean canMoveKnight(int row, int col, int idx) {
-    try {
-      return Optimal[row + Poss[idx][0]][col + Poss[idx][1]].isOpen();
+  public ArrayList<Possibility> create(int row, int col) {
+    ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
+    for (int idx = 0; idx <= 7; idx++) {
+      if (canMoveKnight(row, col, idx)) {
+        Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
+      }
     }
-    catch(IndexOutOfBoundsException e) {}
-    return false;
+    Sort(Possibilities);
+    return Possibilities;
   }
   public int countSolutions(int startingRow, int startingCol) {
     if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length) {
