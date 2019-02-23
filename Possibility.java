@@ -24,17 +24,8 @@ public class Possibility {
   public int getValue() {
     return value;
   }
-  public boolean open() {
+  public boolean isOpen() {
     return open;
-  }
-  public int compareTo(Possibility other) {
-    if (getMoves() > other.getMoves()) {
-      return 1;
-    }
-    if (getMoves() == other.getMoves()) {
-      return 0;
-    }
-    return -1;
   }
   public void change(int moves) {
     this.moves = moves;

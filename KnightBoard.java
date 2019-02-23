@@ -109,6 +109,14 @@ public class KnightBoard {
     if (row < 0 || col < 0 || row >= Optimal.length || col >= Optimal[0].length) {
       return false;
     }
+    ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
+    for (int idx = 0; idx <= 7; idx++) {
+      if (canMoveKnight(row, col, idx)) {
+        Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
+        Optimal[row + Poss[idx][0]][col + Poss[idx][1]].update();
+      }
+    }
+    Sort(Possibilities);
     if (moveNumber >= (Optimal.length * Optimal[0].length)) {
       if (Optimal[row][col].getValue() == 0) {
         Optimal[row][col].move(moveNumber);
@@ -120,14 +128,6 @@ public class KnightBoard {
     }
     if (Optimal[row][col].getValue() == 0 && moveNumber < Optimal.length * Optimal[0].length) {
       Optimal[row][col].move(moveNumber);
-      ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
-      for (int idx = 0; idx <= 7; idx++) {
-        if (canMoveKnight(row, col, idx)) {
-          Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
-          Optimal[row + Poss[idx][0]][col + Poss[idx][1]].update();
-        }
-      }
-      Sort(Possibilities);
       for (int idx = 0; idx < Possibilities.size(); idx++) {
         if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
           return true;
@@ -148,9 +148,9 @@ public class KnightBoard {
       ary.set(curIdx + 1, ary.get(idx));
     }
   }
-  public boolean canMoveKnight(int row, int col, int x) {
+  public boolean canMoveKnight(int row, int col, int idx) {
     try {
-      return Optimal[row + Poss[x][0]][col + Poss[x][1]].open();
+      return Optimal[row + Poss[idx][0]][col + Poss[idx][1]].isOpen();
     }
     catch(IndexOutOfBoundsException e) {}
     return false;
@@ -186,9 +186,9 @@ public class KnightBoard {
   }
   public String toString() {
     String output = "";
-    for (int idx = 0; idx < board.length; idx++) {
+    for (int idx = 0; idx < Optimal.length; idx++) {
       output += "\n";
-      for (int x = 0; x < board[idx].length; x++) {
+      for (int x = 0; x < Optimal[idx].length; x++) {
         if (Optimal[idx][x].getValue() == 0) {
           output += "_ ";
         }
