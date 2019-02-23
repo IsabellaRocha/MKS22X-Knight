@@ -54,45 +54,6 @@ public class KnightBoard {
     return output;
   }
   public boolean solve(int startingRow, int startingCol) {
-    if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length) {
-      throw new IllegalArgumentException();
-    }
-    for (int idx = 0; idx < board.length; idx++) {
-      for (int x = 0; x < board[idx].length; x++) {
-        if (board[idx][x] != 0) {
-          throw new IllegalStateException();
-        }
-      }
-    }
-    return solveH(startingRow, startingCol, 1);
-  }
-  private boolean solveH(int row, int col, int moveNumber) {
-    if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) {
-      return false;
-    }
-    if (moveNumber >= (board.length * board[0].length)) {
-      if (board[row][col] == 0) {
-        board[row][col] = moveNumber;
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-    if (board[row][col] == 0 && moveNumber < board.length * board[0].length) {
-      board[row][col] = moveNumber;
-      for (int idx = 0; idx <= 7; idx++) {
-        if (row + Poss[idx][0] >= 0 && col + Poss[idx][1] >= 0 && row + Poss[idx][0] < board.length && col + Poss[idx][1] < board[0].length) {
-          if(solveH(row + Poss[idx][0], col + Poss[idx][1], moveNumber + 1)) {
-            return true;
-          }
-        }
-      }
-      board[row][col] = 0;
-    }
-    return false;
-  }
-  public boolean solveOpt(int startingRow, int startingCol) {
     if (startingRow < 0 || startingCol < 0 || startingRow >= Optimal.length || startingCol >= Optimal[0].length) {
       throw new IllegalArgumentException();
     }
@@ -103,9 +64,9 @@ public class KnightBoard {
         }
       }
     }
-    return solveOptH(startingRow, startingCol, 1);
+    return solveH(startingRow, startingCol, 1);
   }
-  public boolean solveOptH(int row, int col, int moveNumber) {
+  public boolean solveH(int row, int col, int moveNumber) {
     if (row < 0 || col < 0 || row >= Optimal.length || col >= Optimal[0].length) {
       return false;
     }
@@ -122,12 +83,7 @@ public class KnightBoard {
     if (Optimal[row][col].getValue() == 0 && moveNumber < Optimal.length * Optimal[0].length) {
       Optimal[row][col].move(moveNumber);
       for (int idx = 0; idx < Possibilities.size(); idx++) {
-        System.out.println(Text.CLEAR_SCREEN);
-        System.out.println(Text.go(1,1));
-        System.out.println(this);
-        System.out.println(Possibilities);
-        Text.wait(1500);
-        if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
+        if(solveH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
           return true;
         }
       }
@@ -147,6 +103,7 @@ public class KnightBoard {
     for (int idx = 0; idx <= 7; idx++) {
       if (canMoveKnight(row, col, idx)) {
         Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
+        Optimal[row + Poss[idx][0]][col + Poss[idx][1]].update();
       }
     }
     Collections.sort(Possibilities);
@@ -200,28 +157,5 @@ public class KnightBoard {
       }
     }
     return output;
-  }
-  public static void main(String[] args) {
-    KnightBoard k = new KnightBoard(5, 5);
-    KnightBoard n = new KnightBoard(8, 8);
-    KnightBoard a = new KnightBoard(4, 4);
-    KnightBoard b = new KnightBoard(2, 2);
-    KnightBoard c = new KnightBoard(9, 9);
-//    k.solve(2, 4);
-//    System.out.println(k);
-//    n.solve(1,1);
-//    System.out.println(n);
-//    System.out.println(k.countSolutions(2, 2));
-//    System.out.println(a.countSolutions(0, 0));
-    System.out.println(k.toStringDeBug());
-    System.out.println(n.toStringDeBug());
-    System.out.println(a.toStringDeBug());
-    System.out.println(b.toStringDeBug());
-    System.out.println(c.toStringDeBug());
-    c.solveOpt(0, 0);
-    System.out.println(c);
-//    System.out.println(b.countSolutions(0, 0));
-
-    //System.out.println(c.solveOpt(0, 0));
   }
 }
