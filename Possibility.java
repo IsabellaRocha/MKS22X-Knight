@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Possibility {
+public class Possibility implements Comparable<Possibility>{
   private int row;
   private int col;
   private int moves;
@@ -26,6 +26,9 @@ public class Possibility {
   }
   public boolean isOpen() {
     return open;
+  }
+  public int compareTo(Possibility other) {
+    return this.getMoves() - other.getMoves();
   }
   public void change(int moves) {
     this.moves = moves;

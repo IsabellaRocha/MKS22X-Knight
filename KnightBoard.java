@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 public class KnightBoard {
   private int[][] board;
   public int[][] Poss;
@@ -142,17 +142,6 @@ public class KnightBoard {
     catch(IndexOutOfBoundsException e) {}
     return false;
   }
-  public void Sort(ArrayList<Possibility> ary) {
-    for (int idx = 1; idx < ary.size(); idx++) {
-      int current = ary.get(idx).getMoves();
-      int curIdx = idx - 1;
-      while (curIdx >= 0 && ary.get(curIdx).getMoves() > current) {
-        ary.set(curIdx + 1, ary.get(curIdx));
-        curIdx--;
-      }
-      ary.set(curIdx + 1, ary.get(idx));
-    }
-  }
   public ArrayList<Possibility> create(int row, int col) {
     ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
     for (int idx = 0; idx <= 7; idx++) {
@@ -160,7 +149,7 @@ public class KnightBoard {
         Possibilities.add(Optimal[row + Poss[idx][0]][col + Poss[idx][1]]);
       }
     }
-    Sort(Possibilities);
+    Collections.sort(Possibilities);
     return Possibilities;
   }
   public int countSolutions(int startingRow, int startingCol) {
@@ -229,8 +218,8 @@ public class KnightBoard {
     System.out.println(a.toStringDeBug());
     System.out.println(b.toStringDeBug());
     System.out.println(c.toStringDeBug());
-    k.solveOpt(0, 0);
-    System.out.println(k);
+    c.solveOpt(0, 0);
+    System.out.println(c);
 //    System.out.println(b.countSolutions(0, 0));
 
     //System.out.println(c.solveOpt(0, 0));
