@@ -127,8 +127,8 @@ public class KnightBoard {
       }
     }
     if (Optimal[row][col].getValue() == 0 && moveNumber < Optimal.length * Optimal[0].length) {
-      Optimal[row][col].move(moveNumber);
       for (int idx = 0; idx < Possibilities.size(); idx++) {
+        Possibilities.get(idx).move(moveNumber + 1);
         if(solveOptH(Possibilities.get(idx).getRow(), Possibilities.get(idx).getCol(), moveNumber + 1)) {
           return true;
         }
