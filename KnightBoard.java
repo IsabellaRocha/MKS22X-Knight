@@ -21,7 +21,7 @@ public class KnightBoard {
     Optimal = new Possibility[startingRows][startingCols];
     fillMoves();
   }
-  public void fillMoves() {
+  private void fillMoves() {
     for (int idx = 0; idx < Optimal.length; idx++) {
       for (int x = 0; x < Optimal[0].length; x++) {
         Optimal[idx][x] = new Possibility(idx, x, 8);
@@ -43,16 +43,6 @@ public class KnightBoard {
     Optimal[1][1].change(4); Optimal[1][Optimal[0].length - 2].change(4);
     Optimal[Optimal.length - 2][1].change(4); Optimal[Optimal.length - 2][Optimal[0].length - 2].change(4);
   }
-  public String toStringDeBug() {
-    String output = "";
-    for (int idx = 0; idx < Optimal.length; idx++) {
-      output += "\n";
-      for (int x = 0; x < Optimal[idx].length; x++) {
-        output += Optimal[idx][x].getMoves();
-        }
-      }
-    return output;
-  }
   public boolean solve(int startingRow, int startingCol) {
     if (startingRow < 0 || startingCol < 0 || startingRow >= Optimal.length || startingCol >= Optimal[0].length) {
       throw new IllegalArgumentException();
@@ -66,7 +56,7 @@ public class KnightBoard {
     }
     return solveH(startingRow, startingCol, 1);
   }
-  public boolean solveH(int row, int col, int moveNumber) {
+  private boolean solveH(int row, int col, int moveNumber) {
     if (row < 0 || col < 0 || row >= Optimal.length || col >= Optimal[0].length) {
       return false;
     }
@@ -91,14 +81,14 @@ public class KnightBoard {
     }
     return false;
   }
-  public boolean canMoveKnight(int row, int col, int idx) {
+  private boolean canMoveKnight(int row, int col, int idx) {
     try {
       return Optimal[row + Poss[idx][0]][col + Poss[idx][1]].isOpen();
     }
     catch(IndexOutOfBoundsException e) {}
     return false;
   }
-  public ArrayList<Possibility> create(int row, int col) {
+  private ArrayList<Possibility> create(int row, int col) {
     ArrayList<Possibility> Possibilities = new ArrayList<Possibility>();
     for (int idx = 0; idx <= 7; idx++) {
       if (canMoveKnight(row, col, idx)) {
